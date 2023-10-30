@@ -29,7 +29,7 @@ var addOneTracked = function (aNumber) {
     var tmpAction = "AddOne: ".concat(aNumber.result, " + 1 = ").concat(tmpResult);
     return {
         result: tmpResult,
-        actionsLog: aNumber.actionsLog.concat(tmpAction),
+        actionsLog: aNumber.actionsLog.concat(tmpAction)
     };
 };
 // addTrackingWrapper transforms a function that takes a number and returns a number into a function that returns
@@ -38,6 +38,14 @@ var addTrackingWrapper = function (aNumber) {
     return {
         result: aNumber,
         actionsLog: [],
+    };
+};
+// runWithTracking takes an input and a function and
+var runWithTracking = function (aNumber, transform) {
+    var newNumberTracked = transform(aNumber.result);
+    return {
+        result: newNumberTracked.result,
+        actionsLog: aNumber.actionsLog.concat(newNumberTracked.actionsLog)
     };
 };
 // addOneToSquared runs addOne function on result of the square function
@@ -87,6 +95,16 @@ var main = function () {
         console.log("squareTracked(squareTracked(addTrackingWrapper(".concat(aNumber, ")))"));
         var resultTracked = squareTracked(squareTracked(addTrackingWrapper(aNumber)));
         console.log("".concat(resultTracked.result, " ").concat(resultTracked.actionsLog));
+        console.log("addOneTracked(addOneTracked(addTrackingWrapper(".concat(aNumber, ")))"));
+        resultTracked = addOneTracked(addOneTracked(addTrackingWrapper(aNumber)));
+        console.log("".concat(resultTracked.result, " ").concat(resultTracked.actionsLog));
+        // use newly created monad
+        var a = addTrackingWrapper(3);
+        var b = runWithTracking(a, squareTracked);
+        var c = runWithTracking(b, addOneTracked);
+        console.log(a);
+        console.log(b);
+        console.log(c);
     });
 };
 // run the application

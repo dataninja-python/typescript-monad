@@ -52,7 +52,7 @@ const addOneTracked = (aNumber: ResultWithTracking): ResultWithTracking => {
     let tmpAction = `AddOne: ${aNumber.result} + 1 = ${tmpResult}`
     return {
         result: tmpResult,
-        actionsLog: aNumber.actionsLog.concat(tmpAction),
+        actionsLog: aNumber.actionsLog.concat(tmpAction)
     }
 }
 
@@ -64,6 +64,18 @@ const addTrackingWrapper = (aNumber: number): ResultWithTracking => {
         actionsLog: [],
     }
 }
+
+// runWithTracking takes an input and a function and
+const runWithTracking = (aNumber: ResultWithTracking, transform: (_) => ResultWithTracking ): ResultWithTracking => {
+    const newNumberTracked = transform(aNumber.result)
+    return {
+        result: newNumberTracked.result,
+        actionsLog: aNumber.actionsLog.concat(newNumberTracked.actionsLog)
+    }
+}
+
+
+
 
 // addOneToSquared runs addOne function on result of the square function
 const addOneToSquare = (aNumber: number): number => {
@@ -119,6 +131,19 @@ const main = () => {
         console.log(`squareTracked(squareTracked(addTrackingWrapper(${aNumber})))`)
         let resultTracked = squareTracked(squareTracked(addTrackingWrapper(aNumber)))
         console.log(`${resultTracked.result} ${resultTracked.actionsLog}`)
+        console.log(`addOneTracked(addOneTracked(addTrackingWrapper(${aNumber})))`)
+        resultTracked = addOneTracked(addOneTracked(addTrackingWrapper(aNumber)))
+        console.log(`${resultTracked.result} ${resultTracked.actionsLog}`)
+
+        // use newly created monad
+        const a = addTrackingWrapper(3)
+        const b = runWithTracking(a, squareTracked)
+        const c = runWithTracking(b, addOneTracked)
+
+        console.log(a)
+        console.log(b)
+        console.log(c)
+
     })
 }
 
