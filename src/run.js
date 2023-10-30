@@ -12,11 +12,11 @@ var square = function (aNumber) {
 };
 // squareTracked performs square function operation but adds action tracking
 var squareTracked = function (aNumber) {
-    var tmpResult = square(aNumber.result);
-    var tmpAction = "Squared: ".concat(aNumber.result, " x ").concat(aNumber.result, " = ").concat(tmpResult);
+    var tmpResult = square(aNumber);
+    var tmpAction = "Squared: ".concat(aNumber, " x ").concat(aNumber, " = ").concat(tmpResult);
     return {
         result: tmpResult,
-        actionsLog: aNumber.actionsLog.concat(tmpAction),
+        actionsLog: [tmpAction],
     };
 };
 // addOne adds one to a supplied number
