@@ -1,0 +1,12 @@
+{
+  "name": "typescript-monad",
+  "version": "1.0.0",
+  "description": "This is a representation of monads - used in Haskell often - in javascript to confirm it is an intuitive concept.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
