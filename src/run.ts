@@ -1,5 +1,8 @@
+import {Main} from './application/app/app.main';
+
 function run():void {
-    msg = `
-        The run function runs the entire application.
-    `
+    console.log("hello world");
+    Main()
 }
+
+run()
